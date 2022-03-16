@@ -1,5 +1,6 @@
 import 'package:car_list/cubit/car_cubit.dart';
 import 'package:car_list/data/model/carro.dart';
+import 'package:car_list/utils/router.dart';
 import 'package:car_list/widgets/card_car.dart';
 import 'package:car_list/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             SizedBox(height: 16.h),
             Text(
-              "My Garage",
+              "Minha Garagem",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.subtitle1,
             ),
@@ -51,22 +52,19 @@ class _MainScreenState extends State<MainScreen> {
               height: 100.h,
               child: Padding(
                 padding: EdgeInsets.all(25.w),
-                child: CustomButton(
-                  UniqueKey(),
-                  ButtonType.elevatedButton,
-                  "Adicionar carro",
-                  () {
-                    context.read<CarCubit>().addCar(
-                          Carro(
-                            placa: context
-                                .read<CarCubit>()
-                                .state
-                                .length
-                                .toString(),
-                          ),
-                        );
-                  },
-                ),
+                child: BlocBuilder<CarCubit, List<Carro>>(
+                    builder: (context, state) {
+                  return CustomButton(
+                    UniqueKey(),
+                    ButtonType.elevatedButton,
+                    context.read<CarCubit>().isThereACarSelected()
+                        ? "Editar carro"
+                        : "Adicionar carro",
+                    () {
+                      Navigator.of(context).pushNamed(carInputRoute);
+                    },
+                  );
+                }),
               ),
             ),
           ],
@@ -104,7 +102,7 @@ class _MainScreenState extends State<MainScreen> {
           return CardCar(
             UniqueKey(),
             model,
-            () => context.read<CarCubit>().selectCar(model),
+            () => context.read<CarCubit>().selectCarToggle(model),
             () => _showDialog(model),
           );
         },

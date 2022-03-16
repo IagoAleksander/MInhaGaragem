@@ -6,6 +6,7 @@ class CarCubit extends Cubit<List<Carro>> {
   CarCubit() : super([]);
 
   final DatabaseHelper databaseHelper = DatabaseHelper();
+  int? selectedCarId;
 
   void addCar(Carro car) async {
     int insertedId = await databaseHelper.insertCar(car);
@@ -22,9 +23,21 @@ class CarCubit extends Cubit<List<Carro>> {
     }
   }
 
-  void selectCar(Carro car) {
-    for (Carro element in state) {
-      element.isSelected = element.id == car.id;
+  void selectCarToggle(Carro car) {
+    if (isThereACarSelected() && car.id == selectedCarId) {
+      for (Carro element in state) {
+        if (element.id == car.id) {
+          element.isSelected = false;
+          selectedCarId = null;
+        }
+      }
+    } else {
+      for (Carro element in state) {
+        element.isSelected = element.id == car.id;
+        if (element.id == car.id) {
+          selectedCarId = element.id;
+        }
+      }
     }
     emit([...state]);
   }
@@ -42,5 +55,12 @@ class CarCubit extends Cubit<List<Carro>> {
     if (cars != null) {
       emit(cars);
     }
+  }
+
+  bool isThereACarSelected() {
+    if (selectedCarId != null) {
+      return true;
+    }
+    return false;
   }
 }

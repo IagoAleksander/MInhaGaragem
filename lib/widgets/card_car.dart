@@ -53,13 +53,15 @@ class CardCar extends StatelessWidget {
                         SvgPicture.asset(
                           'assets/icons/car.svg',
                           height: 64.h,
-                          color: ColorsRes.primaryCyan,
+                          color: car.cor != null
+                              ? Color(int.parse(car.cor ?? "-1"))
+                              : ColorsRes.neutralGray,
                         ),
                       ],
                     ),
                   ),
                   Text(
-                    car.placa ?? "FJG45",
+                    car.placa ?? "",
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],
