@@ -11,7 +11,6 @@ ThemeData getThemeData() {
       cardColor: ColorsRes.backgroundWhite,
       indicatorColor: ColorsRes.neutralGray,
       errorColor: ColorsRes.secondaryRed,
-      fontFamily: 'Poppins',
       textTheme: const TextTheme(
         headline6: TextStyle(
           fontWeight: FontWeight.bold,

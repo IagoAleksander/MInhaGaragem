@@ -95,11 +95,11 @@ class _MainScreenState extends State<MainScreen> {
     return Expanded(
       child: GridView.builder(
         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
-          childAspectRatio: 1.3,
+          mainAxisExtent: 150.h
         ),
         itemCount: context.read<CarCubit>().state.length,
         itemBuilder: (_, index) {
