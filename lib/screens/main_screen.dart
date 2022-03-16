@@ -15,6 +15,12 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   @override
+  void initState() {
+    context.read<CarCubit>().getAllCars();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -52,7 +58,6 @@ class _MainScreenState extends State<MainScreen> {
                   () {
                     context.read<CarCubit>().addCar(
                           Carro(
-                            id: context.read<CarCubit>().state.length,
                             placa: context
                                 .read<CarCubit>()
                                 .state

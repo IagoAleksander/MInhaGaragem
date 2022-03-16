@@ -10,5 +10,15 @@ class Carro {
   final String? placa;
   final String? cor;
 
-  bool isSelected;
+  bool isSelected = false;
+
+  Map<String, dynamic> toJson() => {
+        'placa': placa,
+        'cor': cor,
+      };
+
+  Carro.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        placa = json['placa'],
+        cor = json['cor'];
 }
