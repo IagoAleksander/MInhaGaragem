@@ -1,5 +1,6 @@
 import 'package:car_list/data/model/carro.dart';
 import 'package:car_list/utils/colors.dart';
+import 'package:car_list/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -37,7 +38,7 @@ class CardCar extends StatelessWidget {
                 child: InkWell(
                   onTap: _removeFunction,
                   child: SvgPicture.asset(
-                    'assets/icons/del.svg',
+                    IconPaths.deleteIconPath,
                     height: 18.h,
                     color: ColorsRes.neutralGrayishViolet,
                   ),
@@ -51,7 +52,7 @@ class CardCar extends StatelessWidget {
                     child: Stack(
                       children: [
                         SvgPicture.asset(
-                          'assets/icons/car.svg',
+                          IconPaths.carIconPath,
                           height: 64.h,
                           color: car.cor != null
                               ? Color(int.parse(car.cor ?? "-1"))

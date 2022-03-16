@@ -1,5 +1,6 @@
 import 'package:car_list/cubit/car_cubit.dart';
 import 'package:car_list/data/model/carro.dart';
+import 'package:car_list/utils/constants.dart';
 import 'package:car_list/utils/router.dart';
 import 'package:car_list/widgets/card_car.dart';
 import 'package:car_list/widgets/custom_button.dart';
@@ -30,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             SizedBox(height: 16.h),
             Text(
-              "Minha Garagem",
+              Texts.mainScreenTitle,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.subtitle1,
             ),
@@ -56,10 +57,9 @@ class _MainScreenState extends State<MainScreen> {
                     builder: (context, state) {
                   return CustomButton(
                     UniqueKey(),
-                    ButtonType.elevatedButton,
                     context.read<CarCubit>().isThereACarSelected()
-                        ? "Editar carro"
-                        : "Adicionar carro",
+                        ? Texts.mainScreenButtonEditCarOption
+                        : Texts.mainScreenButtonAddCarOption,
                     () {
                       Navigator.of(context).pushNamed(
                         carInputRoute,
@@ -84,7 +84,7 @@ class _MainScreenState extends State<MainScreen> {
         mainAxisSize: MainAxisSize.min,
         children: const [
           Spacer(),
-          Text("Adicione um carro para começar!"),
+          Text(Texts.mainScreenEmptyStateDescriptionText),
           Spacer(),
         ],
       ),
@@ -120,20 +120,22 @@ class _MainScreenState extends State<MainScreen> {
       context: context,
       builder: (BuildContext context) => AlertDialog(
         content: Text(
-          "Você realmente deseja remover esse carro da lista?",
+          Texts.mainScreenDeleteConfirmationDialogText,
           style: Theme.of(context).textTheme.bodyText1,
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Cancelar"),
+            child: const Text(
+                Texts.mainScreenDeleteConfirmationDialogCancelOptionText),
           ),
           TextButton(
             onPressed: () {
               context.read<CarCubit>().removeCar(model);
               Navigator.pop(context);
             },
-            child: const Text("Remover"),
+            child: const Text(
+                Texts.mainScreenDeleteConfirmationDialogConfirmOptionText),
           ),
         ],
       ),

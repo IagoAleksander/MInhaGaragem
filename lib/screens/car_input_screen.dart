@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:car_list/cubit/car_cubit.dart';
 import 'package:car_list/data/model/carro.dart';
+import 'package:car_list/utils/constants.dart';
 import 'package:car_list/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -47,7 +48,7 @@ class _CarInputScreenState extends State<CarInputScreen> {
           children: [
             SizedBox(height: 16.h),
             Text(
-              "Detalhes do Carro",
+              Texts.carInputScreenTitle,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.subtitle1,
             ),
@@ -65,7 +66,7 @@ class _CarInputScreenState extends State<CarInputScreen> {
                   child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Placa:",
+                        Texts.carInputScreenPlateLabel,
                         style: Theme.of(context).textTheme.subtitle1,
                       )),
                 ),
@@ -89,7 +90,7 @@ class _CarInputScreenState extends State<CarInputScreen> {
                   child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Cor:",
+                        Texts.carInputScreenColorLabel,
                         style: Theme.of(context).textTheme.subtitle1,
                       )),
                 ),
@@ -105,7 +106,7 @@ class _CarInputScreenState extends State<CarInputScreen> {
               alignment: Alignment.center,
               transform: Matrix4.rotationY(math.pi),
               child: SvgPicture.asset(
-                'assets/icons/car.svg',
+                IconPaths.carIconPath,
                 height: 128.h,
                 color: pickerColor,
               ),
@@ -117,8 +118,7 @@ class _CarInputScreenState extends State<CarInputScreen> {
                 padding: EdgeInsets.all(25.w),
                 child: CustomButton(
                   UniqueKey(),
-                  ButtonType.elevatedButton,
-                  "Concluir",
+                  Texts.carInputScreenButtonText,
                   () {
                     _upsertCar();
                     Navigator.pop(context);
@@ -140,7 +140,7 @@ class _CarInputScreenState extends State<CarInputScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Escolha uma cor!'),
+        title: const Text(Texts.carInputScreenColorDialogTitle),
         content: SingleChildScrollView(
           child: MaterialPicker(
             pickerColor: pickerColor,
@@ -149,7 +149,7 @@ class _CarInputScreenState extends State<CarInputScreen> {
         ),
         actions: <Widget>[
           ElevatedButton(
-            child: const Text('Confirmar'),
+            child: const Text(Texts.carInputScreenColorDialogConfirmButtonText),
             onPressed: () {
               setState(() => currentColor = pickerColor);
               Navigator.of(context).pop();
