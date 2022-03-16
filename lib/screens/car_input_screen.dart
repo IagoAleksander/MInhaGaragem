@@ -13,7 +13,9 @@ Color pickerColor = const Color(0xff443a49);
 Color currentColor = const Color(0xff443a49);
 
 class CarInputScreen extends StatefulWidget {
-  const CarInputScreen({Key? key}) : super(key: key);
+  const CarInputScreen({Key? key, this.car}) : super(key: key);
+
+  final Carro? car;
 
   @override
   State<CarInputScreen> createState() => _CarInputScreenState();
@@ -21,6 +23,19 @@ class CarInputScreen extends StatefulWidget {
 
 class _CarInputScreenState extends State<CarInputScreen> {
   final plate = TextEditingController();
+
+  @override
+  void initState() {
+    if (widget.car != null) {
+      if (widget.car?.placa != null) {
+        plate.text = widget.car!.placa!;
+      }
+      if (widget.car?.cor != null) {
+        changeColor(Color(int.parse(widget.car!.cor!)));
+      }
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +57,7 @@ class _CarInputScreenState extends State<CarInputScreen> {
               thickness: 1,
               color: Theme.of(context).dividerColor,
             ),
-            Spacer(),
+            const Spacer(),
             Row(
               children: [
                 Padding(
@@ -79,7 +94,7 @@ class _CarInputScreenState extends State<CarInputScreen> {
                       )),
                 ),
                 ElevatedButton(
-                  onPressed: () => showDialoga(),
+                  onPressed: () => callDialog(),
                   child: null,
                   style: ElevatedButton.styleFrom(primary: pickerColor),
                 )
@@ -105,12 +120,7 @@ class _CarInputScreenState extends State<CarInputScreen> {
                   ButtonType.elevatedButton,
                   "Concluir",
                   () {
-                    context.read<CarCubit>().addCar(
-                          Carro(
-                            placa: plate.text,
-                            cor: currentColor.value.toString(),
-                          ),
-                        );
+                    _upsertCar();
                     Navigator.pop(context);
                   },
                 ),
@@ -126,7 +136,7 @@ class _CarInputScreenState extends State<CarInputScreen> {
     setState(() => pickerColor = color);
   }
 
-  showDialoga() {
+  callDialog() {
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -148,5 +158,32 @@ class _CarInputScreenState extends State<CarInputScreen> {
         ],
       ),
     );
+  }
+
+  _upsertCar() {
+    if (widget.car != null) {
+      _updateCar();
+    } else {
+      _addCar();
+    }
+  }
+
+  _updateCar() {
+    context.read<CarCubit>().updateCar(
+          Carro(
+            id: widget.car?.id,
+            placa: plate.text,
+            cor: pickerColor.value.toString(),
+          ),
+        );
+  }
+
+  void _addCar() {
+    context.read<CarCubit>().addCar(
+          Carro(
+            placa: plate.text,
+            cor: pickerColor.value.toString(),
+          ),
+        );
   }
 }

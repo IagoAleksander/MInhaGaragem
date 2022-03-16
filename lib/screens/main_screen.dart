@@ -61,7 +61,12 @@ class _MainScreenState extends State<MainScreen> {
                         ? "Editar carro"
                         : "Adicionar carro",
                     () {
-                      Navigator.of(context).pushNamed(carInputRoute);
+                      Navigator.of(context).pushNamed(
+                        carInputRoute,
+                        arguments: context.read<CarCubit>().getCar(
+                              context.read<CarCubit>().selectedCarId,
+                            ),
+                      );
                     },
                   );
                 }),
@@ -115,20 +120,20 @@ class _MainScreenState extends State<MainScreen> {
       context: context,
       builder: (BuildContext context) => AlertDialog(
         content: Text(
-          "Do you really want to remove the car from the list?",
+          "Você realmente deseja remover esse carro da lista?",
           style: Theme.of(context).textTheme.bodyText1,
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
+            child: const Text("Cancelar"),
           ),
           TextButton(
             onPressed: () {
               context.read<CarCubit>().removeCar(model);
               Navigator.pop(context);
             },
-            child: const Text("Remove"),
+            child: const Text("Remover"),
           ),
         ],
       ),

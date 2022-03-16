@@ -1,3 +1,4 @@
+import 'package:car_list/data/model/carro.dart';
 import 'package:car_list/screens/car_input_screen.dart';
 import 'package:car_list/screens/main_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,8 @@ class RouteManager {
         return MaterialPageRoute(builder: (_) => const MainScreen());
 
       case carInputRoute:
-        return MaterialPageRoute(builder: (_) => const CarInputScreen());
+        var car = settings.arguments as Carro?;
+        return MaterialPageRoute(builder: (_) => CarInputScreen(car: car));
 
       default:
         return MaterialPageRoute(

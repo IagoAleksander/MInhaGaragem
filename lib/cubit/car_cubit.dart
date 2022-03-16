@@ -12,14 +12,15 @@ class CarCubit extends Cubit<List<Carro>> {
     int insertedId = await databaseHelper.insertCar(car);
 
     if (insertedId > 0) {
-      emit([
-        ...state,
-        Carro(
-          id: insertedId,
-          placa: car.placa,
-          cor: car.cor,
-        )
-      ]);
+      getAllCars();
+    }
+  }
+
+  void updateCar(Carro car) async {
+    int updatedId = await databaseHelper.updateCar(car);
+
+    if (updatedId > 0) {
+      getAllCars();
     }
   }
 
@@ -42,11 +43,10 @@ class CarCubit extends Cubit<List<Carro>> {
     emit([...state]);
   }
 
-  void removeCar(Carro car) {
+  void removeCar(Carro car) async {
     if (car.id != null) {
-      databaseHelper.deleteCar(car.id ?? -1);
-      state.remove(car);
-      emit([...state]);
+      await databaseHelper.deleteCar(car.id ?? -1);
+      getAllCars();
     }
   }
 
@@ -62,5 +62,14 @@ class CarCubit extends Cubit<List<Carro>> {
       return true;
     }
     return false;
+  }
+
+  Carro? getCar(int? id) {
+    for (Carro element in state) {
+      if (element.id == id) {
+        return element;
+      }
+    }
+    return null;
   }
 }

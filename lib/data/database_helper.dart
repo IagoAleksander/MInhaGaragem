@@ -52,6 +52,17 @@ class DatabaseHelper {
     );
   }
 
+  Future updateCar(Carro car) async {
+    final db = await database;
+
+    return await db?.update(
+      table,
+      car.toJson(),
+      where: "$columnId = ?",
+      whereArgs: [car.id],
+    );
+  }
+
   Future<List<Carro>?> getCarList() async {
     final db = await database;
 
