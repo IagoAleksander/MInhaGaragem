@@ -1,16 +1,17 @@
-# car_list
+# Minha Garagem
 
-A simple Flutter project to build a list of cars
+A simple Flutter project to build and edit a list of cars
 
-## Getting Started
+## State Management
 
-This project is a starting point for a Flutter application.
+- SetState
+- Cubit
 
-A few resources to get you started if this is your first Flutter project:
+## Libraries
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- SvgIcon
+- SqfLite
+- ColorPicker
+- ScreenUtil
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The 'Carro' model was followed exactly like the proposed in the challenge. That's why its variable names are in portuguese and the String type is used to reference the color.
